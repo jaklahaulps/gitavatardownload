@@ -1,6 +1,7 @@
 var request = require('request');
 var key = '0da5fa54714cb8998bceafdc95f59511031c34f8';
 var fs = require('fs');
+var proc = process.argv
 //var filepath = './avatars/'
 
 function getRepoContributors(repoOwner, repoName, cb) {
@@ -31,7 +32,7 @@ function downloadImageByURL(url, filePath){
 
 console.log('Welcome to the Github Avatar Downloader!');
 
-getRepoContributors("jquery", "jquery", function(err, result){
+getRepoContributors(proc[2], proc[3], function(err, result){
   for (var i = 0; i < result.length; i++ ){
     //console.log(result);
     var filePath = './avatarImg/' + result[i].login + '.jpg'; //avatar file path is not working for me
