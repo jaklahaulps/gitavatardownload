@@ -1,5 +1,7 @@
 var request = require('request');
 var key = '0da5fa54714cb8998bceafdc95f59511031c34f8';
+var fs = require('fs');
+//var filepath = './avatars/'
 
 function getRepoContributors(repoOwner, repoName, cb) {
   var options = {
@@ -13,14 +15,30 @@ function getRepoContributors(repoOwner, repoName, cb) {
   });
 }
 
+function downloadImageByURL(url, filePath){
+  request.get(url)               // Note 1
+       .on('error', function (err) {
+         throw err;
+       })
+       .on('response', function (response) {                           // Note 3
+         console.log('Response Status Code: ', response.statusCode);
+       })
+       .pipe(fs.createWriteStream(filePath));
+       console.log (filePath)
+};
 
 
 
 console.log('Welcome to the Github Avatar Downloader!');
 
 getRepoContributors("jquery", "jquery", function(err, result){
-  for (key of result){
-    console.log(key.avatar_url);
+  for (var i = 0; i < result.length; i++ ){
+    //console.log(result);
+    var filePath = './avatarImg/' + result[i].login + '.jpg'; //avatar file path is not working for me
+    var urlPaths = result[i].avatar_url;
+    console.log(urlPaths)
+
+    downloadImageByURL(urlPaths, filePath);
   }
   console.log("Errors", err);
 });
