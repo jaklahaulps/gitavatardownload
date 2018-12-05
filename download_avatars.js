@@ -1,6 +1,5 @@
 var env = require('dotenv').config();
 var request = require('request');
-var key = '0da5fa54714cb8998bceafdc95f59511031c34f8';
 var fs = require('fs');
 var proc = process.argv
 //var filepath = './avatars/'
