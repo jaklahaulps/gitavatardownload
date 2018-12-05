@@ -1,21 +1,23 @@
+var env = require('dotenv').config();
 var request = require('request');
 var key = '0da5fa54714cb8998bceafdc95f59511031c34f8';
 var fs = require('fs');
 var proc = process.argv
 //var filepath = './avatars/'
+// console.log("env", process.env.DB_PASS)
 
 function getRepoContributors(repoOwner, repoName, cb) {
-  if (repoOwner !== undefined && repoName !== undefined){
+  if (repoOwner !== undefined && repoName !== undefined) {
     var options = {
       url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
       headers: {
         'User-Agent': 'request',
-        Authorization: 'token ' + key
+        Authorization: process.env.DB_PASS
       }}
     request(options, function(err, res, body){
       cb(err, JSON.parse(body));
     });
-    } else{
+  } else {
     console.log('Requires input.');
   };
 };
@@ -39,5 +41,4 @@ getRepoContributors(proc[2], proc[3], function(err, result){
     downloadImageByURL(urlPaths, filePath);
   }
   console.log("Image download complete.")
-  console.log("Errors", err);
 });
